@@ -1,44 +1,86 @@
 const express = require('express');
-const sql = require('mssql')
+const mysql = require('mysql')
 const app = express();
 const config = require('./dbconfig');
 
 console.log(config)
 
+//create connection
+const db = mysql.createConnection({
+    host: config.server,
+    user: config.user,
+    password: config.password,
+    database: config.database,
+    port: config.port
+})
 
-sql.connect(config, (err)=>{
-    if(err) console.log(err)
+db.connect((err)=>{
+    if(err){
+        throw err;
+    }
+
+    console.log('Mysql connected...')
+})
 
 
-    let sqlRequest = new sql.Request();
+app.get("/addUser", (req, res) => {
+    let sql = "INSERT INTO usuarios SET?";
+    let post = {
+        nombre_completo: 'User 1',
+        bio:  'soy andres',
+        fecha_nacimiento:  '1995-12-31 23:59:59',
+        Pais: 'España', 
+        Email: 'juan@juan.com',
+        puntos:  '0',
+        fecha_creacion: '2020-03-23 20:11:59',
+        fecha_modificacion: null
+        };
 
-    let sqlQuery ='Select * from usuarios'
+        let query = db.query(sql, post, (err, result)=>{
+            if(err) throw err;
+            console.log(result);
+            res.send('Usuario ANDRES  creado en la tabla....')
+        });
+})
 
-    sqlRequest.query(sqlQuery, (err, data)=> {
-        if(err) console.log(err);
+//get all users
+app.get("/getUsers", (req, res) => {
 
+    let sql = 'SELECT * FROM usuarios';
+    let query = db.query(sql, (err, results) =>{
+        if(err) throw err;
+        console.log(results)
+        res.send('Users fetched...')
 
-        console.log(data);
-        console.log(data.recordset);
-        console.log(data.rowsAffected);
-        console.log(data.recordset[0]);
-
-        sql.close();
     })
 })
 
 
+//get  user by id
+app.get('/getUser/:id', (req, res) => {
+    console.log(req.params.id)
+    let sql = `SELECT * FROM usuarios WHERE id_usuario =${req.params.id}`;
+    let query = db.query(sql, (err, result) =>{
+        if(err) throw err;
+        console.log(result)
+        res.send('User fetched...')
 
-
-
-
-
-
-
-app.get("/algo", function(req, res){
-    res.send('<h1>hello juan, my api<h1>')
+    })
 })
 
+//delete user id
+app.get("/deleteUser:id", (req, res) =>{
+
+    console.log(req.params.id)
+    let sql = `DELETE FROM usuarios WHERE id_usuario =${req.params.id}`;
+    let query = db.query(sql, (err, result) =>{
+        if(err) throw err;
+        console.log(result)
+        res.send('User deleted...')
+
+    })
+
+})
 
 
 const webServer = app.listen(5000, function(){
