@@ -25,21 +25,24 @@ db.connect((err)=>{
 
 app.get("/addUser", (req, res) => {
     let sql = "INSERT INTO usuarios SET?";
+
+    console.log({body: req.body})
+
     let post = {
-        nombre_completo: 'User 1',
-        bio:  'soy andres',
-        fecha_nacimiento:  '1995-12-31 23:59:59',
-        Pais: 'España', 
-        Email: 'juan@juan.com',
-        puntos:  '0',
-        fecha_creacion: '2020-03-23 20:11:59',
-        fecha_modificacion: null
+        nombre_completo: req.body.name || 'User 1',
+        bio: req.body.bio || 'soy andres',
+        fecha_nacimiento:  req.body.dob || '1995-12-31 23:59:59',
+        Pais: req.body.spain ||'España', 
+        Email: req.body.email ||'juan@juan.com',
+        puntos:  req.body.points ||'0',
+        fecha_creacion: req.body.created || '2020-03-23 20:11:59',
+        fecha_modificacion: req.body.modified || null
         };
 
         let query = db.query(sql, post, (err, result)=>{
             if(err) throw err;
             console.log(result);
-            res.send('Usuario ANDRES  creado en la tabla....')
+            res.send(`Usuario ${post.name} creado en la tabla....`)
         });
 })
 
