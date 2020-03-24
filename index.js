@@ -62,7 +62,7 @@ app.get("/getUsers", (req, res) => {
     let query = db.query(sql, (err, results) =>{
         if(err) throw err;
         console.log(results)
-        res.send('Users fetched...')
+        res.status(200).send({message:"ok, todos los usuarios", results});
 
     })
 })
@@ -75,7 +75,7 @@ app.get('/getUser/:id', (req, res) => {
     let query = db.query(sql, (err, result) =>{
         if(err) throw err;
         console.log(result)
-        res.send('User fetched...')
+        res.status(200).send({message:"ok", result});
 
     })
 })
