@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "express": "^4.17.1",
+>>>>>>> 5faf909ffbc2708b9ceffbbe824ac2c06ec9d05e
     "mysql": "^2.18.1"
   }
 }
