@@ -1,32 +1,20 @@
 const express = require('express');
-const sql = require('mssql')
+const sql = require('mysql')
 const app = express();
 const config = require('./dbconfig');
 
 console.log(config)
 
+var mysql = require('mysql');
 
-sql.connect(config, (err)=>{
-    if(err) console.log(err)
-
-
-    let sqlRequest = new sql.Request();
-
-    let sqlQuery ='Select * from usuarios'
-
-    sqlRequest.query(sqlQuery, (err, data)=> {
-        if(err) console.log(err);
-
-
-        console.log(data);
-        console.log(data.recordset);
-        console.log(data.rowsAffected);
-        console.log(data.recordset[0]);
-
-        sql.close();
-    })
-})
-
+config.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    config.query("select * from usuarios", function (err, result) {
+      if (err) throw err;
+      console.log("Result: " + result[0].bio);
+    });
+  });
 
 
 
