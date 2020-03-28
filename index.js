@@ -62,20 +62,20 @@ app.get("/getUsers", (req, res) => {
     let query = db.query(sql, (err, results) =>{
         if(err) throw err;
         console.log(results)
-        res.status(200).send({message:"ok, todos los usuarios", results});
+		res.status(200).send({message:"ok, todos los usuarios", results});
 
     })
 })
 
 
 //get  user by id
-app.get('/getUser/:id', (req, res) => {
+app.get('/getUser/:email', (req, res) => {
     console.log(req.params.id)
-    let sql = `SELECT * FROM usuarios WHERE id_usuario =${req.params.id}`;
+	    let sql = `SELECT * FROM usuarios WHERE Email =${req.params.email}`;
     let query = db.query(sql, (err, result) =>{
         if(err) throw err;
         console.log(result)
-        res.status(200).send({message:"ok", result});
+		res.status(200).send({message:"ok", result});
 
     })
 })
