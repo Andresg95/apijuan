@@ -1,7 +1,9 @@
 const express = require('express');
 const mysql = require('mysql')
 const app = express();
+const moment = require('moment')
 var bodyParser = require('body-parser');
+
 
 const config = require('./dbconfig');
 
@@ -32,6 +34,7 @@ app.post("/addUser", (req, res) => {
     let sql = "INSERT INTO usuarios SET?";
 
     console.log({body: req.body})
+    const date = moment().format("YYYY-MM-DD HH:mm:ss");
 
     let post = {
         nombre_completo: req.body.name || 'User 1',
@@ -40,18 +43,21 @@ app.post("/addUser", (req, res) => {
         Pais: req.body.country ||'España', 
         Email: req.body.email ||'juan@juan.com',
         puntos:  req.body.points ||'0',
-        foto: req.body.foto || `iVBORw0KGgoAAAANSUhEUgAAAAUA
+        foto: req.body.picture || `iVBORw0KGgoAAAANSUhEUgAAAAUA
         AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
             9TXL0Y4OHwAAAABJRU5ErkJggg==`,
-        genero: req.body.genero || "M",
-        fecha_creacion: req.body.created || '2020-03-23 20:11:59',
-        fecha_modificacion: req.body.modified || null
+        genero: req.body.gender || "M",
+        fecha_creacion: date,
+        fecha_modificacion:date 
         };
 
         let query = db.query(sql, post, (err, result)=>{
-            if(err) throw err;
+            if(err){
+                res.status(400).send({err})
+                throw err;
+            } 
             console.log(result);
-            res.send(`Usuario ${post.name} creado en la tabla....`)
+            res.status(200).send({message: "ok", data: result})
         });
 })
 
@@ -69,9 +75,9 @@ app.get("/getUsers", (req, res) => {
 
 
 //get  user by id
-app.get('/getUser/:email', (req, res) => {
+app.get('/getUserId/:id', (req, res) => {
     console.log(req.params.id)
-	    let sql = `SELECT * FROM usuarios WHERE Email =${req.params.email}`;
+	    let sql = `SELECT * FROM usuarios WHERE id_usuario =${req.params.id}`;
     let query = db.query(sql, (err, result) =>{
         if(err) throw err;
         console.log(result)
@@ -80,8 +86,25 @@ app.get('/getUser/:email', (req, res) => {
     })
 })
 
+//get user by email
+app.post('/getUser', (req, res) => {
+
+    try {
+        const {email}  = req.body;
+        let sql = `SELECT * FROM usuarios WHERE Email='${email}'`;
+        let query = db.query(sql, (err, result) =>{
+            if(err) throw err;
+            console.log(result)
+            res.status(200).send({message:"ok", result});       
+        })
+        } catch (error) {
+            res.status(500).send({message: "ko", result:"bad params"});
+        }
+})
+
+
 //delete user id
-app.get("/deleteUser:id", (req, res) =>{
+app.get("/deleteUser/:id", (req, res) =>{
 
     console.log(req.params.id)
     let sql = `DELETE FROM usuarios WHERE id_usuario =${req.params.id}`;
