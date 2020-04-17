@@ -1,40 +1,56 @@
 module.exports = (sequelize, DataTypes) => {
-    const device = sequelize.define(
-      "user",
-      {
-        serialNumber: {
-          type: DataTypes.STRING,
-          primaryKey: true,
-          field: "serial_number"
-        },
-        address: {
-          type: DataTypes.STRING,
-          field: "address"
-        },
-        region: {
-          type: DataTypes.STRING,
-          field: "region"
-        },
-        city: {
-          type: DataTypes.STRING,
-          field: "city"
-        },
-        postalCode: {
-          type: DataTypes.INTEGER,
-          field: "postal_code"
-        },
-        placeName: {
-          type: DataTypes.STRING,
-          field: "place_name"
-        }
+  const user = sequelize.define(
+    "user",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        field: "id"
       },
-      {
-        timestamps: true,
-        tableName: "devices",
-        freezeTableName: true
+      name: {
+        type: DataTypes.STRING,
+        field: "name"
+      },
+      bio: {
+          type: DataTypes.STRING,
+          field: "bio"
+        },
+      dob: {
+          type: DataTypes.DATE,
+          field: "dob"
+      },
+      country: {
+          type: DataTypes.INTEGER,
+          field: "country"
+      },
+      email: {
+          type: DataTypes.STRING,
+          field: "email"
+        },
+      points: {
+          type: DataTypes.INTEGER,
+          field: "points"
+      },
+      photo: {
+          type: DataTypes.TEXT('long'),
+          field: "photo"
+      },
+      gender: {
+          type: DataTypes.CHAR,
+          field: "gender"
+      },
+      nickname: {
+          type: DataTypes.STRING,
+          field: "nickname"
       }
-    );
-  
-    return device;
-  };
-  
+     
+    },
+    {
+      timestamps: true,
+      tableName: "users",
+      freezeTableName: true
+    }
+  );
+
+  return user;
+};
