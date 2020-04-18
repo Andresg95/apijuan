@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
           field: "id"
         },
         partnerId: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           field: "partner_id"
         },
         userId: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             field: "user_id"
         },
         date: {
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
             field: "date"
         },
         type: {
-            type: DataTypes.STRING,
+            type: DataTypes.CHAR,
             field: "type"
         },
         points: {

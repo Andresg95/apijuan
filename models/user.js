@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
           field: "dob"
       },
       country: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           field: "country"
       },
       email: {
