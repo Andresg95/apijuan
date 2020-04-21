@@ -8,7 +8,8 @@
     "create-migration": "sequelize migration:generate --name",
     "migrate": "sequelize db:migrate",
     "undo-migrate": "sequelize db:migrate:undo",
-    "undo-migrate-all": "sequelize db:migrate:undo:all"
+    "undo-migrate-all": "sequelize db:migrate:undo:all",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
+    "nodemon": "^2.0.3",
     "sequelize": "^5.21.6",
     "sequelize-cli": "^5.5.1"
   }

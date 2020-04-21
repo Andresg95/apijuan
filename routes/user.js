@@ -22,47 +22,64 @@ const moment = require('moment')
 */
 
 router.post("/add", (req, res) => {
-    let sql = "INSERT INTO usuarios SET?";
+    let sql = "INSERT INTO users SET?";
 
     console.log({body: req.body})
     const date = moment().format("YYYY-MM-DD HH:mm:ss");
 
-    let post = {
-        nombre_completo: req.body.name || 'default name',
-        bio: req.body.bio || 'default bio...',
-        fecha_nacimiento:  req.body.dob || null,
-        Pais: req.body.country ||'España', 
-        Email: req.body.email ||'test@test.com',
-        nickname: req.body.nickname || req.body.name || "",
-        puntos:  req.body.points ||'0',
-        foto: req.body.picture || `iVBORw0KGgoAAAANSUhEUgAAAAUA
-        AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-            9TXL0Y4OHwAAAABJRU5ErkJggg==`,
-        genero: req.body.gender || "M",
-        fecha_creacion: date,
-        fecha_modificacion:date 
-        };
+  
+        models.user.create({
+            
+            name: req.body.name || 'default name',
+            bio: req.body.bio || 'default bio...',
+            dob:  req.body.dob || null,
+            country: req.body.country ||'España', 
+            email: req.body.email ||'test@test.com',
+            nickname: req.body.nickname || req.body.name || "",
+            points:  req.body.points || 3,
+            photo: req.body.picture || null,
+            gender: req.body.gender || "M",
+            createdAt: date,
+            updatedAt :date 
 
-        let query = db.query(sql, post, (err, result)=>{
-            if(err){
-                res.status(400).send({err})
-                throw err;
-            } 
-            console.log(result);
-            res.status(200).send({message: "ok", data: result})
-        });
+        })
+            .then( (data) => {
+
+                //console.log("what is this", {data})
+            res.status(200).send({message: "ok", data})
+            })
+            .catch( (err)=> {
+            res.status(400).send({err})
+            })
+
+        // let query = db.query(sql, post, (err, result)=>{
+        //     if(err){
+        //         res.status(400).send({err})
+        //         throw err;
+        //     } 
+        //     res.status(200).send({message: "ok", data: result})
+        // });
 })
 
 //get all users
 router.get("/getAll", (req, res) => {
 
-    let sql = 'SELECT * FROM usuarios';
-    let query = db.query(sql, (err, results) =>{
-        if(err) throw err;
-        console.log(results)
-		res.status(200).send({message:"ok, todos los usuarios", results});
+    console.log("whtf")
+    let data = models.user.findAll().then((results) => {
 
-    })  
+
+        console.log({results})
+        res.status(200).send({message:"ok, todos los usuarios", results});
+
+    })
+
+    // let sql = 'SELECT * FROM usuarios';
+    // let query = db.query(sql, (err, results) =>{
+    //     if(err) throw err;
+    //     console.log(results)
+	// 	res.status(200).send({message:"ok, todos los usuarios", results});
+
+    // })  
 })
 
 
