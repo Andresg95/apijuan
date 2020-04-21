@@ -50,9 +50,8 @@ router.post("/add", (req, res) => {
 //get all users
 router.get("/getAll", (req, res) => {
 
-    console.log("whtf")
-    let data = models.user.findAll()
-    .then((results) => { res.status(200).send({message:"ok, todos los usuarios", results});})
+    models.user.findAll()
+    .then((results) => { res.status(200).send({message:"ok", results});})
     .catch(err=>{res.status(500).send({err})})
 
 })
