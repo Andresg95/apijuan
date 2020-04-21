@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
 const models = require('../models');
 
 //libraries
@@ -13,8 +12,8 @@ const moment = require('moment')
                 /getAll (GET)
                 /:id (GET)
                 /getUser (POST)
-                /delete/:id (DELETE)           
-                /update (PUT)    
+                /:id (DELETE)           
+                /:id (PUT)    
 
 
 
@@ -22,12 +21,9 @@ const moment = require('moment')
 */
 
 router.post("/add", (req, res) => {
-    let sql = "INSERT INTO users SET?";
+ 
 
-    console.log({body: req.body})
-    const date = moment().format("YYYY-MM-DD HH:mm:ss");
-
-  
+    const date = moment().format("YYYY-MM-DD HH:mm:ss");    
         models.user.create({
             
             name: req.body.name || 'default name',
@@ -44,90 +40,67 @@ router.post("/add", (req, res) => {
 
         })
             .then( (data) => {
-
-                //console.log("what is this", {data})
             res.status(200).send({message: "ok", data})
             })
             .catch( (err)=> {
             res.status(400).send({err})
             })
-
-        // let query = db.query(sql, post, (err, result)=>{
-        //     if(err){
-        //         res.status(400).send({err})
-        //         throw err;
-        //     } 
-        //     res.status(200).send({message: "ok", data: result})
-        // });
 })
 
 //get all users
 router.get("/getAll", (req, res) => {
 
     console.log("whtf")
-    let data = models.user.findAll().then((results) => {
+    let data = models.user.findAll()
+    .then((results) => { res.status(200).send({message:"ok, todos los usuarios", results});})
+    .catch(err=>{res.status(500).send({err})})
 
-
-        console.log({results})
-        res.status(200).send({message:"ok, todos los usuarios", results});
-
-    })
-
-    // let sql = 'SELECT * FROM usuarios';
-    // let query = db.query(sql, (err, results) =>{
-    //     if(err) throw err;
-    //     console.log(results)
-	// 	res.status(200).send({message:"ok, todos los usuarios", results});
-
-    // })  
 })
 
 
 //get  user by id
 router.get('/:id', (req, res) => {
-    console.log(req.params.id)
-	    let sql = `SELECT * FROM usuarios WHERE id_usuario =${req.params.id}`;
-    let query = db.query(sql, (err, result) =>{
-        if(err) throw err;
-        console.log(result)
-		res.status(200).send({message:"ok", result});
+    
+    
+    models.user.findOne({where:{id:req.params.id}})
+    .then(result=>{res.status(200).send({message:"ok", result}); })
+    .catch(err => {res.status(500).send({err})})
 
-    })
 })
 
 //get user by email
 router.post('/getUser', (req, res) => {
 
-    try {
-        const {email}  = req.body;
-        let sql = `SELECT * FROM usuarios WHERE Email='${email}'`;
-        let query = db.query(sql, (err, result) =>{
-            if(err) throw err;
-            console.log(result)
-            res.status(200).send({message:"ok", result});       
-        })
-        } catch (error) {
-            res.status(500).send({message: "ko", result:"bad params"});
-        }
+    
+        const email = req.body.email || null;
+        console.log({email})
+        models.user.findOne({where:{email}})
+        .then(result=>{res.status(200).send({message:"ok", result}); })
+        .catch(err => {res.status(500).send({err})})
+
 })
 
 
 //delete user id
-router.get("/delete/:id", (req, res) =>{
+router.delete("/:id", (req, res) =>{
 
-    console.log(req.params.id)
-    let sql = `DELETE FROM usuarios WHERE id_usuario =${req.params.id}`;
-    let query = db.query(sql, (err, result) =>{
-        if(err) throw err;
-        console.log(result)
-        res.send('User deleted...')
+    const id = req.params.id;
+    models.user.destroy({where:{id}})
+    .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"user deleted succesfully" : "user not found"}); })
+    .catch(err => {res.status(500).send({err})})
 
-    })
 
 })
 
+router.put("/:id", (req, res) => {
 
 
+    const id = req.params.id;
+    console.log({id, body: req.body})
+    models.user.update(req.body, { where: {id}})
+    .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"user updated succesfully" : "user not found"}); })
+    .catch(err => {res.status(500).send({err})})
 
+});
 
 module.exports = router;
