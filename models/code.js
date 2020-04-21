@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.CHAR,
             field: "status"
         },
+        value: {
+            type: DataTypes.STRING,
+            field:"value"
+        }
       },
       {
         timestamps: false,

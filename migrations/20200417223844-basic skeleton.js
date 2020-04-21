@@ -149,6 +149,8 @@ module.exports = {
               id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
+                allowNull: false,
+                autoIncrement: true,
                 field: "id"
               },
               partner_id: {

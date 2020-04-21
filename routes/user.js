@@ -15,9 +15,6 @@ const moment = require('moment')
                 /:id (DELETE)           
                 /:id (PUT)    
 
-
-
-
 */
 
 router.post("/add", (req, res) => {
@@ -39,12 +36,8 @@ router.post("/add", (req, res) => {
             updatedAt :date 
 
         })
-            .then( (data) => {
-            res.status(200).send({message: "ok", data})
-            })
-            .catch( (err)=> {
-            res.status(400).send({err})
-            })
+            .then( data => { res.status(200).send({message: "ok", data}) })
+            .catch( err=> { res.status(400).send({err}) })
 })
 
 //get all users
