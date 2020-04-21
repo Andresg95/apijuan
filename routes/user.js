@@ -1,9 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../dbconnection');
+const models = require('../models');
 
 //libraries
 const moment = require('moment')
+
+
+/*  
+    /user
+    -endpoints: /add (POST)
+                /getAll (GET)
+                /:id (GET)
+                /getUser (POST)
+                /delete/:id (DELETE)           
+                /update (PUT)    
+
+
+
+
+*/
 
 router.post("/add", (req, res) => {
     let sql = "INSERT INTO usuarios SET?";
@@ -46,7 +62,7 @@ router.get("/getAll", (req, res) => {
         console.log(results)
 		res.status(200).send({message:"ok, todos los usuarios", results});
 
-    })
+    })  
 })
 
 

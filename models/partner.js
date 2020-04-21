@@ -59,6 +59,34 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
       }
     );
+
+    partner.associate = function(models) {
+      
+      partner.hasMany(models.transaction, {
+        foreignKey: 'partner_id',
+        as: "pTransaction"
+      })
+  
+      partner.hasMany(models.code, {
+        foreignKey: 'partner_id',
+        as: "pCodes"
+      })
+
+      partner.belongsToMany(models.user, {
+        through: "codes",
+        as: "userCodes",
+        foreignKey: "partner_id",
+        otherKey: "id"
+      })
+
+      partner.belongsToMany(models.user, {
+        as: "userTransactions",
+        through: "transactions",
+        foreignKey: "partner_id",
+        otherKey: "id"
+      })  
+  
+    }
   
     return partner;
   };

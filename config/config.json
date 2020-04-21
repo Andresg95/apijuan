@@ -1,5 +1,5 @@
 {
-  "development": {
+  "test": {
     "username": "root",
     "password": "va123",
     "database": "vagarydb_2020",
@@ -7,7 +7,7 @@
     "dialect": "mysql",
     "operatorsAliases": false
   },
-  "test": {
+  "development": {
     "username": "vagary",
     "password": "super1234",
     "database": "vagary",
