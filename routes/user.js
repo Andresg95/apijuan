@@ -20,7 +20,7 @@ const moment = require('moment')
 router.post("/add", (req, res) => {
  
 
-    const date = moment().format("YYYY-MM-DD HH:mm:ss");    
+    const date = moment().format("YYYY-MM-DD");    
         models.user.create({
             
             name: req.body.name || 'default name',
@@ -30,7 +30,7 @@ router.post("/add", (req, res) => {
             email: req.body.email ||'test@test.com',
             nickname: req.body.nickname || req.body.name || "",
             points:  req.body.points || 3,
-            photo: req.body.picture || null,
+            photo: req.body.photo || null,
             gender: req.body.gender || "M",
             createdAt: date,
             updatedAt :date 

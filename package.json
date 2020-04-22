@@ -9,7 +9,11 @@
     "migrate": "sequelize db:migrate",
     "undo-migrate": "sequelize db:migrate:undo",
     "undo-migrate-all": "sequelize db:migrate:undo:all",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "create-seed" : "sequelize-cli seed:generate --name",
+    "seeds": "sequelize db:seed",
+    "seeds-all": "sequelize db:seed:all",
+    "unseed": "sequelize db:seed:undo:all"
   },
   "keywords": [],
   "author": "",

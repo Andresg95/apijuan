@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             field: "type"
         },
         creationDate: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           field: "creation_date"
         },
         phone: {

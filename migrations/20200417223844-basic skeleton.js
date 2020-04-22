@@ -17,7 +17,7 @@ module.exports = {
                 type: Sequelize.STRING(500),
             },
             dob: {
-                type: Sequelize.DATE,
+                type: Sequelize.DATEONLY,
             },
             country: {
                 type: Sequelize.STRING(150),
@@ -29,7 +29,7 @@ module.exports = {
                 type: Sequelize.INTEGER(11),
             },
             photo: {
-                type: Sequelize.TEXT('long'),
+                type: Sequelize.TEXT,
             },
             gender: {
                 type: Sequelize.CHAR(1, true),
@@ -64,7 +64,7 @@ module.exports = {
                 type: Sequelize.INTEGER(11),
               },
               date: {
-                type: Sequelize.DATE,
+                type: Sequelize.DATEONLY,
               },
               type: {
                 type: Sequelize.CHAR(1, true),
@@ -117,13 +117,13 @@ module.exports = {
                   type: Sequelize.STRING(150),
               },
               photo: {
-                  type: Sequelize.TEXT('long'),
+                  type: Sequelize.TEXT,
               },
               type: {
                   type: Sequelize.INTEGER(11),
               },
               creation_date: {
-                type: Sequelize.DATE,
+                type: Sequelize.DATEONLY,
               },
               phone: {
                   type: Sequelize.STRING(45),
@@ -135,7 +135,7 @@ module.exports = {
                 type: Sequelize.STRING(150),
               },
               schedule: {
-                  type: Sequelize.TEXT('long'),
+                  type: Sequelize.TEXT,
               },
             },
             {timestamps: false})
@@ -160,7 +160,7 @@ module.exports = {
                   type: Sequelize.INTEGER,
               },
               date: {
-                  type: Sequelize.DATE,
+                  type: Sequelize.DATEONLY,
               },
               status: {
                   type: Sequelize.CHAR,

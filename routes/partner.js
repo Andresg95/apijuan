@@ -38,8 +38,9 @@ router.post('/getPartner', (req, res) => {
 
 //create partner
 router.post('/add', (req, res) =>{
-    const date = moment().format("YYYY-MM-DD HH:mm:ss");
+    const date = moment().format("YYYY-MM-DD");
     
+    console.log({date})
     const { body} = req;
 
     partner.create({
@@ -49,7 +50,7 @@ router.post('/add', (req, res) =>{
         country: body.country || "",
         city: body.city || "",
         photo: body.photo || "",
-        type: body.type || 1,
+        type: body.type || 2,
         phone: body.phone || "",
         email: body.email || "",
         web: body.web || "",

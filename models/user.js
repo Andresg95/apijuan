@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
           field: "bio"
         },
       dob: {
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           field: "dob"
       },
       country: {

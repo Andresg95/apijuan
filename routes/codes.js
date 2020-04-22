@@ -40,10 +40,13 @@ const moment = require('moment')
         const today = moment().format("YYYY-MM-DD");  
         const {partnerId, userId} = req.body;
 
-        code.findAll({where:{
+        code.findAll({
+            
+            attributes: { exclude: ["partner_id", "user_id"] },
+            where:{
             partnerId,
             userId,
-           // date: today,
+            date: today,
             status: "1"
         }})
         .then( data => { res.status(200).send({message: "ok", data}) })
