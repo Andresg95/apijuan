@@ -85,6 +85,8 @@ const moment = require('moment')
             }   
 
             
+        }).catch(()=>{
+            res.status(200).send({message:"code value or partnerId NOT found", error: true})
         })
 
      })
