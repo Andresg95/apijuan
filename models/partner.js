@@ -49,9 +49,17 @@ module.exports = (sequelize, DataTypes) => {
           field: "web"
         },
         schedule: {
-            type: DataTypes.TEXT('long'),
+            type: DataTypes.TEXT,
             field: "schedule"
-          },
+        },
+        average: {
+          type: DataTypes.INTEGER,
+          field: "average"
+      },
+        code: {
+          type: DataTypes.STRING,
+          field: "code"
+        },
        
       },
       {

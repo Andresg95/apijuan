@@ -12,7 +12,7 @@ const partner = models.partner;
     -endpoints: /add (POST)
                 /getAll (GET)
                 /getPartner (POST)
-              
+                /code/:code (GET)
 */
 
 //get all partners
@@ -55,12 +55,22 @@ router.post('/add', (req, res) =>{
         email: body.email || "",
         web: body.web || "",
         schedule: body.schedule || "",
+        code: body.code || "",
+        average: 0,
         creationDate: date
     })
    
    .then( data => {res.status(200).send({message: "ok", data})})
     .catch( err=> {res.status(400).send({err})})
 
+})
+
+
+router.get("/code/:code", (req, res) =>{
+
+    partner.findOne({where:{code: req.params.code}})
+    .then(result=>{res.status(200).send({message:"ok", result}); })
+    .catch(err => {res.status(500).send({err})})
 })
 
 module.exports = router;
