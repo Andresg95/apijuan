@@ -95,4 +95,49 @@ router.put("/:id", (req, res) => {
 
 });
 
+router.post("/transaction", (req, res) => {
+
+    const { partnerId, userId, type, points } = req.body;
+    const date = moment().format("YYYY-MM-DD");  
+
+    models.sequelize.transaction( (t) =>{
+
+    return models.transaction.create({
+        partnerId,
+        userId,
+        type,
+        date, 
+        points
+    }, {transaction: t})
+        .then(async transaction => {
+       
+            return models.user.findOne({where: {id:userId}}, {transaction: t})
+            .then(async user =>{
+
+                    console.log({user})
+
+                    let currentPoints = transaction.type == "1" ? user.points+=transaction.points : user.points-=transaction.points;
+                    console.log({currentPoints})
+                    
+                    if(currentPoints < 0){
+                        let insufficientPoints = "Not enough points to fullfill request"
+                        throw new Error(insufficientPoints);
+                    }
+                    return await user.update({
+                        points: currentPoints 
+                        }, {transaction: t}).then(() => {
+                            return {currentPoints};
+                        })           
+                })
+            })
+            .catch(err=> { throw new Error(err)})
+        })
+
+    .then(result =>  res.status(200).send({message:"Points updated", currentPoints: result.currentPoints}))
+    .catch (err =>  res.status(200).send({error:true, message: err.message}) )
+
+
+
+    })
+
 module.exports = router;
