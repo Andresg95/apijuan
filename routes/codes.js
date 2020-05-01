@@ -58,12 +58,14 @@ const moment = require('moment')
 
      router.put("/use", (req, res) => {
 
+        const today = moment().format("YYYY-MM-DD"); 
         const { partnerId, value} = req.body;
 
         code.findOne({where:
         {
             partnerId,
-            value
+            value,
+            date: today
         }}).then(code=>{
             let userid = code.dataValues.userId;
 
