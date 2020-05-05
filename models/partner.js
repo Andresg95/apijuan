@@ -60,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           field: "code"
         },
+        coordinates: {
+          type: DataTypes.TEXT,
+          field: "coordinates"
+        },
+        logo: {
+          type: DataTypes.STRING(200),
+          field: "logo"
+        }
        
       },
       {

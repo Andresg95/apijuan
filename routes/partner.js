@@ -13,6 +13,8 @@ const partner = models.partner;
                 /getAll (GET)
                 /getPartner (POST)
                 /code/:code (GET)
+                /location/ (POST)
+                /position/:id (PUT)
 */
 
 //get all partners
@@ -56,6 +58,8 @@ router.post('/add', (req, res) =>{
         web: body.web || "",
         schedule: body.schedule || "",
         code: body.code || "",
+        logo: body.logo || "",
+        coordenates: body.coordenates || "",
         average: 0,
         creationDate: date
     })
@@ -72,5 +76,28 @@ router.get("/code/:code", (req, res) =>{
     .then(result=>{res.status(200).send({message:"ok", result}); })
     .catch(err => {res.status(500).send({err})})
 })
+
+//array parteners con todos datos
+router.post("/location", (req, res) => {
+
+    const data = req.body;
+
+    partner.findAll({where:{city: data.city, country: data.country}}).then(data=> {
+         res.status(200).send({message: "ok", data})
+    })
+    .catch(err => {res.status(500).send({err})})
+    
+});
+
+router.put("/position/:id", (req, res) =>{
+
+    const id = req.params.id;
+    const body = {coordinates: req.body.coordinates,
+        logo: req.body.logo}
+    models.partner.update(body, { where: {id}})
+    .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"partner updated succesfully" : "partner not found"}); })
+    .catch(err => {res.status(500).send({err})})
+})
+
 
 module.exports = router;
