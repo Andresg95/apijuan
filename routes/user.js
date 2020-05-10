@@ -13,7 +13,8 @@ const moment = require('moment')
                 /:id (GET)
                 /getUser (POST)
                 /:id (DELETE)           
-                /:id (PUT)    
+                /:id (PUT)
+                /seenplaces/:id    
 
 */
 
@@ -94,6 +95,46 @@ router.put("/:id", (req, res) => {
     .catch(err => {res.status(500).send({err})})
 
 });
+
+
+router.get("/seenplaces/:id", (req, res) =>{
+
+    const userId = req.params.id;
+
+    models.transaction.findAll({
+        distinct: 'partner_id',
+        attributes: { 
+            exclude: ["id", "partnerId",
+                "userId",
+                "date",
+                "type",
+                "points",
+                "partner_id",
+                "user_id"],
+         
+    }, 
+            include:[{
+            model: models.partner,
+            as: "place",
+            
+            order:
+        [
+            ['country', 'ASC'],
+            ['city', 'ASC'],
+        ]
+        }],
+        where:{userId},
+        })
+            .then(async result=>{
+                let finaldata= await result.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i)
+                res.status(200).send({message:"ok", result: finaldata}); 
+            
+            })
+            .catch(err => {res.status(500).send({err})})
+    })
+    
+
+
 
 router.post("/transaction", (req, res) => {
 

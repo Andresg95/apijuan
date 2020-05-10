@@ -35,6 +35,14 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
       }
     );
+
+
+    transaction.associate = function(models){
+      transaction.belongsTo(models.partner, {
+        foreignKey: "partnerId",
+        as: "place"
+      })
+    }
   
     return transaction;
   };
