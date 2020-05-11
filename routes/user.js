@@ -126,8 +126,18 @@ router.get("/seenplaces/:id", (req, res) =>{
         where:{userId},
         })
             .then(async result=>{
-                let finaldata= await result.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i)
-                res.status(200).send({message:"ok", result: finaldata}); 
+
+                let finalData= Array.from(new Set(result.map(partner => partner.place.id)))
+                .map(id =>{
+                    return result.find(a => a.place.id === id)
+                })
+
+                console.log({finalData})
+
+                console.log({finalData})
+
+                // SELECT * FROM partners WHERE partners.id IN (SELECT DISTINCT transactions.partner_id FROM transactions INNER JOIN partners ON transactions.partner_id = partners.id INNER JOIN users ON transactions.user_id = users.id WHERE users.id = 2) ORDER BY country ASC, city ASC
+                res.status(200).send({message:"ok", result: finalData}); 
             
             })
             .catch(err => {res.status(500).send({err})})
