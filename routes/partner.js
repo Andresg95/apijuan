@@ -61,6 +61,7 @@ router.post('/add', (req, res) =>{
         logo: body.logo || "",
         coordenates: body.coordenates || "",
         average: 0,
+        recommended: body.recommended || false,
         creationDate: date
     })
    
