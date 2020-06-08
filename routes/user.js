@@ -33,6 +33,9 @@ router.post("/add", (req, res) => {
             points:  req.body.points || 3,
             photo: req.body.photo || null,
             gender: req.body.gender || "M",
+            phone: req.body.phone || "000",
+            address: req.body.address || "",
+            address2: req.body.address2 || "",
             createdAt: date,
             updatedAt :date 
 
