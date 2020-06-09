@@ -15,6 +15,7 @@ const partner = models.partner;
                 /code/:code (GET)
                 /location/ (POST)
                 /position/:id (PUT)
+                /product/:id (POST)
 */
 
 //get all partners
@@ -99,6 +100,31 @@ router.put("/position/:id", (req, res) =>{
     .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"partner updated succesfully" : "partner not found"}); })
     .catch(err => {res.status(500).send({err})})
 })
+
+router.post("/product", (req, res) =>{
+
+   if(req.body.partnerId){
+       const date = moment().format("YYYY-MM-DD"); 
+       models.product.create({
+           name: req.body.name || "default product",
+           date,
+           description: req.body.description || "no description",
+           price: req.body.price || 0.0,
+           photo: req.body.photo || "no picture",
+           available: req.body.available || false,
+           partnerId: req.body.partnerId
+           
+        })
+        .then( data => {
+            res.status(200).send({message: "ok", data})
+        })
+        .catch(err => { res.status(500).send({err})})
+    }else{
+        res.status(200).send({message: "no partnerId provided"})
+    }
+
+
+} )
 
 
 module.exports = router;

@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
       }
     );
+
+    code.associate = function(models){
+      code.hasMany(models.order, {
+        foreignKey: "code_id",
+        as: "codeOrders"
+      })
+    }
   
     return code;
   };
