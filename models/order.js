@@ -27,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
       }
     );
+
+    order.associate = function (models){
+      order.belongsTo(models.product, {
+        foreignKey: "product_id",
+        as: 'productDetail'
+      })
+    }
   
     return order;
   };
