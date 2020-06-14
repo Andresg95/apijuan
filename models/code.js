@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
         value: {
             type: DataTypes.STRING,
             field:"value"
+        },
+        type: {
+          type: DataTypes.CHAR,
+          field: "type"
+        },
+        payMethod: {
+          type: DataTypes.CHAR,
+          field: "payment-method"
         }
       },
       {

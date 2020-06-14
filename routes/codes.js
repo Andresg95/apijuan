@@ -19,12 +19,13 @@ const moment = require('moment')
         let date = moment().format("YYYY-MM-DD");  
         const {partnerId, userId, status, value } = req.body;
 
-        console.log({body:req.body})
         code.create({
 
             partnerId,
             userId,
             status,
+            type,
+            payMethod,
             date, 
             value 
 
@@ -35,6 +36,21 @@ const moment = require('moment')
 
      })
 
+     router.get("/:id", (req, res) => {
+        
+        const id = req.params.id;
+        code.findOne({
+            attributes: { exclude: ["partner_id", "user_id"] },
+            where:{id,
+                status: "1"
+            }})
+        .then(result=>{
+            res.status(200).send({message:"ok", result}); })
+        .catch(err => {
+            console.log({err})
+            res.status(500).send({err})})
+     })
+     
 
      router.post("/getValids", (req, res)=> {
 
