@@ -49,6 +49,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "code_id",
         as: "codeOrders"
       })
+
+      code.belongsTo(models.user, {
+        foreignKey :"user_id",
+        as : "clientOrder"
+      })
     }
   
     return code;

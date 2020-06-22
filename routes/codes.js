@@ -50,6 +50,30 @@ const moment = require('moment')
             console.log({err})
             res.status(500).send({err})})
      })
+
+     router.get("getAll/:id", (req, res)=> {
+        const partnerId = req.params.id;
+        const today = moment().format("YYYY-MM-DD");  
+
+        code.findAll({
+            
+            attributes: { exclude: ["partner_id", "user_id"] },
+            include: [{
+                model : models.user,
+                as: "clientOrder"
+            }],
+
+            where:{
+            partnerId,
+            date: today,
+            status: "1"
+        }})
+        .then( data => { res.status(200).send({message: "ok", data}) })
+        .catch( err=> { res.status(400).send({err}) })
+
+
+
+     })
      
 
      router.post("/getValids", (req, res)=> {
