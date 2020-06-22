@@ -6,9 +6,10 @@ const code  = models.code;
 
 //libraries
 
-router.get("/detailed/:id", (req, res) => {
+router.post("/detailed", (req, res) => {
 
-    const codeId = req.params.id;
+    const { partnerId, value} = req.body;
+    const today = moment().format("YYYY-MM-DD");  
     
     code.findOne({
         attributes: { exclude: ["partner_id", "user_id"] },
@@ -22,7 +23,10 @@ router.get("/detailed/:id", (req, res) => {
             }]
            
         }],
-        where:{id: codeId}})
+        where:{partnerId,
+        value,    
+        date: today,
+        status: "1"    }})
     .then(result=>{
         res.status(200).send({message:"ok", result}); })
     .catch(err => {
