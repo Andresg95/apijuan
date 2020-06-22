@@ -17,7 +17,7 @@ const moment = require('moment')
      router.post("/add", (req, res) =>{
 
         let date = moment().format("YYYY-MM-DD");  
-        const {partnerId, userId, status, value } = req.body;
+        const {partnerId, userId, status, value, type, payMethod } = req.body;
 
         code.create({
 
