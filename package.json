@@ -11,7 +11,7 @@
     "undo-migrate-specific": "sequelize db:migrate:undo --name",
     "undo-migrate-all": "sequelize db:migrate:undo:all",
     "dev": "nodemon index.js",
-    "create-seed" : "sequelize-cli seed:generate --name",
+    "create-seed": "sequelize-cli seed:generate --name",
     "seeds": "sequelize db:seed",
     "seeds-all": "sequelize db:seed:all",
     "unseed": "sequelize db:seed:undo:all"

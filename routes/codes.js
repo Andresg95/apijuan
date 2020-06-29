@@ -114,8 +114,10 @@ const moment = require('moment')
                 code.update({
                     status: "0"
                 }).then(()=>{
+
+                    let codedata =  {status: "0", ...code};
                     models.user.findOne({where:{id:userid}})
-                    .then(result=>{res.status(200).send({message:"ok", result}); })
+                    .then(result=>{res.status(200).send({message:"ok", result: {result, code: codedata.dataValues} }); })
                     .catch(err => {res.status(500).send({err})})
     
     
