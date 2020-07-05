@@ -145,7 +145,7 @@ router.get("/seenplaces/:id", (req, res) =>{
 
 router.post("/transaction", (req, res) => {
 
-    const { partnerId, userId, type, points } = req.body;
+    const { partnerId, userId, type, points, total } = req.body;
     const date = moment().format("YYYY-MM-DD");  
 
     models.sequelize.transaction( (t) =>{
