@@ -155,7 +155,8 @@ router.post("/transaction", (req, res) => {
         userId,
         type,
         date, 
-        points
+        points,
+        total
     }, {transaction: t})
         .then(async transaction => {
        

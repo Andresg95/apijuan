@@ -27,7 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         points: {
             type: DataTypes.INTEGER,
             field: "points"
-        },      
+        },
+        total : {
+          type: DataTypes.FLOAT ,
+          field : "total"
+        }      
       },
       {
         timestamps: false,
