@@ -34,6 +34,47 @@ router.post("/detailed", (req, res) => {
         res.status(500).send({err})})
 })
 
+router.get("/pending/:id", (req, res) => {
+
+    const partnerId = req.params.id;
+
+    const today = moment().format("YYYY-MM-DD");
+
+    console.log({partnerId, today})
+
+    code.findAll({
+        attributes: { exclude: ["partner_id", "user_id"] },
+        include: [{
+            model: models.order,
+            as: "codeOrders",
+            attributes: { exclude: ["partner_id", "code_id", "product_id"] },
+            include: [{
+                model: models.product,
+                as: "productDetail"
+            }]
+        },
+        {
+            model: models.user,
+            as: "clientOrder"
+        }],
+        where: {
+            partnerId,
+            date: today,
+            status: "1"
+
+        }
+    })
+        .then(result => {
+            res.status(200).send({ message: "ok", result });
+        })
+        .catch(err => {
+            console.log({ err })
+            res.status(500).send({ err })
+        })
+
+
+})
+
 
 
 router.put("/:id", (req, res) =>{
