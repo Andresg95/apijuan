@@ -36,6 +36,7 @@ router.post("/add", (req, res) => {
             phone: req.body.phone || "000",
             address: req.body.address || "",
             address2: req.body.address2 || "",
+            token: req.body.token || "",
             createdAt: date,
             updatedAt :date 
 
@@ -92,7 +93,6 @@ router.put("/:id", (req, res) => {
 
 
     const id = req.params.id;
-    console.log({id, body: req.body})
     models.user.update(req.body, { where: {id}})
     .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"user updated succesfully" : "user not found"}); })
     .catch(err => {res.status(500).send({err})})

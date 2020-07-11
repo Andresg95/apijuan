@@ -135,6 +135,28 @@ const moment = require('moment')
 
      })
 
+     router.post("/detailed", (req, res) => {
+
+        const { partnerId, value} = req.body;
+        const today = moment().format("YYYY-MM-DD");  
+        
+        code.findOne({
+            attributes: { exclude: ["partner_id", "user_id"] },
+            include: [
+            {
+                model: models.user,
+                as: "clientOrder"
+            }],
+            where:{partnerId,
+            value,    
+               }})
+        .then(result=>{
+            res.status(200).send({message:"ok", result}); })
+        .catch(err => {
+            console.log({err})
+            res.status(500).send({err})})
+    })
+
 
 
 

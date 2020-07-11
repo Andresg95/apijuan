@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
       address2: {
         type: DataTypes.STRING,
         field: "address2"
+      },
+      token: {
+        type: DataTypes.STRING,
+        field: "token"
       }
      
     },

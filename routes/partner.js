@@ -60,6 +60,7 @@ router.post('/add', (req, res) =>{
         schedule: body.schedule || "",
         code: body.code || "",
         logo: body.logo || "",
+        token: req.body.token || "",
         coordenates: body.coordenates || "",
         average: 0,
         recommended: body.recommended || false,
@@ -96,6 +97,15 @@ router.put("/position/:id", (req, res) =>{
     const id = req.params.id;
     const body = {coordinates: req.body.coordinates,
         logo: req.body.logo}
+    models.partner.update(body, { where: {id}})
+    .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"partner updated succesfully" : "partner not found"}); })
+    .catch(err => {res.status(500).send({err})})
+})
+
+router.put("/:id", (req, res) =>{
+
+    const id = req.params.id;
+    const body = req.body;
     models.partner.update(body, { where: {id}})
     .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"partner updated succesfully" : "partner not found"}); })
     .catch(err => {res.status(500).send({err})})

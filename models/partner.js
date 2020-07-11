@@ -71,6 +71,10 @@ module.exports = (sequelize, DataTypes) => {
         recommended: {
           type: DataTypes.BOOLEAN,
           field: "recommended"
+        },
+        token: {
+          type: DataTypes.STRING(200),
+          field: "token"
         }
        
       },
