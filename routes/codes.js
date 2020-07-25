@@ -165,7 +165,9 @@ const moment = require('moment')
                 as: "clientOrder"
             }],
             where:{partnerId,
-            value,    
+            value,
+             date: today,
+            status: "1"    
                }})
         .then(result=>{
             res.status(200).send({message:"ok", result}); })
