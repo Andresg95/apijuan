@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         payMethod: {
           type: DataTypes.CHAR,
           field: "payment-method"
+        },
+        deliveryStatus: {
+          type: DataTypes.CHAR,
+          field: "delivery_status"
         }
       },
       {
