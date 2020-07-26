@@ -101,7 +101,7 @@ const moment = require('moment')
 
         const id = req.params.id;
 
-        if(req.body.quantity){
+        if(req.body.paymentStatus){
             const {paymentStatus} = req.body; 
         
         code.update( paymentStatus , {where:{id}})
