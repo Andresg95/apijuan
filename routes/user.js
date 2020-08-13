@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const crypto = require('../config/crypto')
 
 //libraries
 const moment = require('moment')
@@ -30,6 +31,7 @@ router.post("/add", (req, res) => {
             country: req.body.country ||'España', 
             email: req.body.email ||'test@test.com',
             nickname: req.body.nickname || req.body.name || "",
+            password: crypto.encrypt(req.body.password) || crypto.encrypt("randomString"),
             points:  req.body.points || 3,
             photo: req.body.photo || null,
             gender: req.body.gender || "M",
@@ -43,6 +45,20 @@ router.post("/add", (req, res) => {
         })
             .then( data => { res.status(200).send({message: "ok", data}) })
             .catch( err=> { res.status(400).send({err}) })
+})
+
+router.post("/login", (req, res) => {
+
+    const { nickname, password } = req.body;
+    
+    models.user.findOne({where:{nickname}})
+    .then((result) => { 
+        crypto.decrypt(result.password) == password ?
+        res.status(200).send({message:"login succesful", result}) : 
+        res.status(200).send({message:"Incorrect username or password", result:[] })
+    })
+    .catch(err=>{ res.status(500).send({message:"User not found", result:[]})})
+
 })
 
 //get all users

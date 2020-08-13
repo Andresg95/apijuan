@@ -59,7 +59,11 @@ module.exports = (sequelize, DataTypes) => {
       token: {
         type: DataTypes.STRING,
         field: "token"
-      }
+      },
+      password: {
+        type: DataTypes.STRING,
+        field: "password"
+      },
      
     },
     {
