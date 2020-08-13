@@ -96,21 +96,6 @@ const moment = require('moment')
 
      })
 
-     router.put("/:id", (req, res) => {
-
-
-        const id = req.params.id;
-
-        if(req.body.paymentStatus){
-            const {paymentStatus} = req.body; 
-        
-        code.update( paymentStatus , {where:{id}})
-        .then(result=>{res.status(200).send({message:"ok", result: result==1 ?"code updated succesfully" : "code not found"}); })
-        .catch(err => {res.status(500).send({err})})
-    }else{
-        res.status(200).send({message: "no paymentStatus provided"})
-    }
-     })
  
 
      router.put("/use", (req, res) => {
@@ -175,6 +160,21 @@ const moment = require('moment')
             console.log({err})
             res.status(500).send({err})})
     })
+
+router.put("/:id", (req, res) => {
+
+    const id = req.params.id;
+
+    if (req.body.deliveryStatus) {
+        const { deliveryStatus } = req.body;
+
+        code.update({ deliveryStatus: deliveryStatus }, { where: { id } })
+            .then(result => { res.status(200).send({ message: "ok", result: result == 1 ? "code updated succesfully" : "code not found" }); })
+            .catch(err => { res.status(500).send({ err }) })
+    } else {
+        res.status(200).send({ message: "no deliveryStatus provided" })
+    }
+})
 
 
 
