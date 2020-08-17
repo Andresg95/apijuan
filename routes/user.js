@@ -47,6 +47,20 @@ router.post("/add", (req, res) => {
             .catch( err=> { res.status(400).send({err}) })
 })
 
+router.get("/available", (req, res) =>  {
+
+    const { nickname } = req.query;
+    models.user.findOne({where:{nickname}})
+    .then(result=>{
+        (result!=null) ?
+            res.status(200).send({message:"Not Available"}):
+            res.status(200).send({message:"Available"});
+    })
+    .catch(err => {res.status(500).send({message: "err", err})
+})
+})
+
+
 router.post("/login", (req, res) => {
 
     const { nickname, password } = req.body;
