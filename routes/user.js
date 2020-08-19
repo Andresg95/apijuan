@@ -31,7 +31,7 @@ router.post("/add", (req, res) => {
             country: req.body.country ||'España', 
             email: req.body.email ||'test@test.com',
             nickname: req.body.nickname || req.body.name || "",
-            password: crypto.encrypt(req.body.password) || crypto.encrypt("randomString"),
+            password: req.body.password ? crypto.encrypt(req.body.password) : crypto.encrypt("randomString"),
             points:  req.body.points || 3,
             photo: req.body.photo || null,
             gender: req.body.gender || "M",
