@@ -30,7 +30,7 @@ router.post("/add", (req, res) => {
             dob:  req.body.dob || null,
             country: req.body.country ||'España', 
             email: req.body.email ||'test@test.com',
-            nickname: req.body.nickname || req.body.name || "",
+            nickname: req.body.nickname ? req.body.nickname: req.body.name,
             password: req.body.password ? crypto.encrypt(req.body.password) : crypto.encrypt("randomString"),
             points:  req.body.points || 3,
             photo: req.body.photo || null,
