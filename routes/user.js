@@ -60,6 +60,20 @@ router.get("/available", (req, res) =>  {
 })
 })
 
+router.get("/checkphone", (req, res) =>  {
+
+    let {phone} = req.query;   
+    models.user.findOne({where:{phone}})
+    .then(result=>{
+        (result!=null) ?
+            res.status(200).send({message:"Not Available"}):
+            res.status(200).send({message:"Available"});
+    })
+    .catch(err => {res.status(500).send({message: "err", err})
+})
+})
+
+
 
 router.post("/login", (req, res) => {
 
